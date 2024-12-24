@@ -20,7 +20,7 @@ export class UserService {
     return this.userRepository.find();
   }
 
-  async findOne(username: string, password: string): Promise<User | undefined> {
-    return this.userRepository.findOne({ where: { username, password } });
+  async findOne(username: string): Promise<User | undefined> {
+    return this.userRepository.findOne({ where: { username } });
   }
 }

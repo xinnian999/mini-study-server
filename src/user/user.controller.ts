@@ -25,13 +25,13 @@ export class UserController {
     }
   }
 
-  @Post('login')
-  async login(@Body() body: User) {
-    const res = await this.userService.findOne(body.username, body.password)
+  // @Post('login')
+  // async login(@Body() body: User) {
+  //   const res = await this.userService.findOne(body.username)
 
-    return {
-      errno: res ? 0 : 1,
-      data: res
-    }
-  }
+  //   return {
+  //     errno: res ? 0 : 1,
+  //     data: res
+  //   }
+  // }
 }
