@@ -12,6 +12,7 @@ import {
   export class AuthGuard implements CanActivate {
     constructor(private jwtService: JwtService) {}
   
+    // 校验token
     async canActivate(context: ExecutionContext): Promise<boolean> {
       const request = context.switchToHttp().getRequest();
       const token = this.extractTokenFromHeader(request);
@@ -25,18 +26,16 @@ import {
             secret: jwtConstants.secret
           }
         );
-        // 💡 We're assigning the payload to the request object here
-        // so that we can access it in our route handlers
-        request['user'] = payload;
+
+        request['user'] = payload; // token校验通过时，将用户信息挂载到请求对象上
       } catch {
         throw new UnauthorizedException();
       }
       return true;
     }
   
+    // 从请求头中提取 token
     private extractTokenFromHeader(request: Request): string | undefined {
-        console.log(request.headers);
-        
       const [type, token] = request.headers.authorization?.split(' ') ?? [];
       return type === 'Bearer' ? token : undefined;
     }
