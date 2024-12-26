@@ -11,7 +11,7 @@ export class UserService {
     private userRepository: Repository<User>,
   ) {}
 
-  async create(params: User): Promise<User> {
+  async create(params: User) {
     const user = this.userRepository.create(params);
     return this.userRepository.save(user);
   }
@@ -30,7 +30,7 @@ export class UserService {
 
   async updateUserByUserId(
     useId: number,
-    userInfo: User,
+    userInfo: Partial<User>,
   ): Promise<UpdateResult> {
     return this.userRepository.update({ id: useId }, userInfo);
   }

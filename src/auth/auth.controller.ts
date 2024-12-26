@@ -24,6 +24,13 @@ export class AuthController {
     return this.authService.signIn(signInDto.username, signInDto.password);
   }
 
+  // 注册
+  @HttpCode(HttpStatus.OK)
+  @Post('register')
+  signUp(@Body() signInDto: Record<string, any>) {
+    return this.authService.signUp(signInDto.username, signInDto.password);
+  }
+
   // 获取用户信息
   @UseGuards(AuthGuard)
   @Get('profile')

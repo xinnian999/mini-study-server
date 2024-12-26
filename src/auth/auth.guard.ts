@@ -29,7 +29,7 @@ import {
 
         request['user'] = payload; // token校验通过时，将用户信息挂载到请求对象上
       } catch {
-        throw new UnauthorizedException();
+        throw new UnauthorizedException(); // 不通过时，抛出401异常
       }
       return true;
     }

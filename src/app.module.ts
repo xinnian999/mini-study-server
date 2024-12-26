@@ -4,9 +4,13 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
+import { UploadModule } from './upload/upload.module';
 
 @Module({
   imports: [
+    // 数据库配置
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
@@ -18,8 +22,13 @@ import { AuthModule } from './auth/auth.module';
       autoLoadEntities: true,
       synchronize: true,
     }),
+    // 静态服务配置
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'static'),
+    }),
     UserModule,
-    AuthModule
+    AuthModule,
+    UploadModule,
   ],
   controllers: [AppController],
   providers: [AppService],

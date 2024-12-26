@@ -3,7 +3,7 @@ import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
-  id: number;
+  id?: number;
 
   @Column({ unique: true })
   username: string;
@@ -13,12 +13,12 @@ export class User {
 
   @Column({
     default:
-      'https://img0.baidu.com/it/u=3582999362,3809132610&fm=253&app=120&size=w931&n=0&f=JPEG&fmt=auto?sec=1734973200&t=9fbc9c800660134dadbc25a60ddc12de',
+      'https://t7.baidu.com/it/u=817611040,1231620461&fm=217&app=126&size=f242,150&n=0&f=PNG?s=6330AA66EE22248C5994289A03008093&sec=1735318800&t=ff97ab2cb5983cf5901425e37c5907cc',
   })
-  avatar: string;
+  avatar?: string;
 
   @Column({
     default: `宝宝${Math.floor(1000 + Math.random() * 9000).toString()}`,
   })
-  nickname: string;
+  nickname?: string;
 }

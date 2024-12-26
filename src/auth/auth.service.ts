@@ -1,4 +1,9 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  UnauthorizedException,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { User } from 'src/user/user.entity';
@@ -24,6 +29,18 @@ export class AuthService {
     };
   }
 
+  async signUp(username: string, pass: string): Promise<any> {
+    try {
+      await this.userService.create({ username, password: pass });
+      return {
+        message: 'success',
+        messageText: '注册成功',
+      };
+    } catch {
+      throw new HttpException('username Unique', HttpStatus.CONFLICT);
+    }
+  }
+
   async getUserInfo(userId: number): Promise<any> {
     const userInfo = await this.userService.findOneByUserId(userId);
 
@@ -33,8 +50,6 @@ export class AuthService {
   }
 
   async setUserInfo(userId: number, info: User): Promise<any> {
-    console.log(info);
-    
     delete info.password;
     delete info.id;
 
