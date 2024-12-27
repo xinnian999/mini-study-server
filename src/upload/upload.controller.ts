@@ -9,6 +9,7 @@ import {
 import { UploadService } from './upload.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthRequest } from 'src/interface';
 
 @Controller('upload')
 export class UploadController {
@@ -17,9 +18,12 @@ export class UploadController {
   @Post('userAvatar')
   @UseGuards(AuthGuard)
   @UseInterceptors(FileInterceptor('file')) // 将name为file的文件拦截下来
-  userAvatar(@UploadedFile() file, @Request() req) {
-    const path = `http://172.20.72.37:3000/userAvatar/${file.filename}`
-    
+  userAvatar(
+    @UploadedFile() file: Express.Multer.File,
+    @Request() req: AuthRequest,
+  ) {
+    const path = `${global.host}/userAvatar/${file.filename}`;
+
     return this.uploadService.uploadUserAvatar(req.user.userId, path);
   }
 }

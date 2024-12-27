@@ -12,6 +12,7 @@ import {
 import { AuthService } from './auth.service';
 import { AuthGuard } from './auth.guard';
 import { User } from '../user/user.entity';
+import { AuthRequest } from 'src/interface';
 
 @Controller('auth')
 export class AuthController {
@@ -34,14 +35,14 @@ export class AuthController {
   // 获取用户信息
   @UseGuards(AuthGuard)
   @Get('profile')
-  getProfile(@Request() req) {
+  getProfile(@Request() req: AuthRequest) {
     return this.authService.getUserInfo(req.user.userId);
   }
 
   // 更新用户信息
   @UseGuards(AuthGuard)
   @Put('updateUserInfo')
-  updateUserInfo(@Request() req, @Body() body: User) {
+  updateUserInfo(@Request() req: AuthRequest, @Body() body: User) {
     return this.authService.setUserInfo(req.user.userId, body);
   }
 }
