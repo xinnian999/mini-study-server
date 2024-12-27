@@ -2,10 +2,10 @@ import { existsSync, mkdirSync } from 'fs';
 import { join } from 'path';
 
 // 传入需要检查和创建的目录数组
-const directories = ['userAvatar'];
+const directories = ['userAvatar', 'gallery'];
 
 // 假设 static 目录在服务器根目录下
-const staticDir = join(process.cwd(), 'static'); 
+const staticDir = join(process.cwd(), 'static');
 
 // 检查并创建目录的函数
 function staticDirInit() {

@@ -3,18 +3,14 @@ import { Injectable } from '@nestjs/common';
 import { join } from 'path';
 import * as fs from 'fs-extra';
 import { UserService } from 'src/user/user.service';
+import { GalleryService } from 'src/gallery/gallery.service';
 
 @Injectable()
 export class UploadService {
-  constructor(private userService: UserService) {}
-
-  async uploadUserAvatar(userId: number, path: string) {
-    const oldAvatar = (await this.userService.findOneByUserId(userId)).avatar;
-
-    await this.deleteImage(oldAvatar);
-
-    return await this.userService.updateUserByUserId(userId, { avatar: path });
-  }
+  constructor(
+    private userService: UserService,
+    private galleryService: GalleryService,
+  ) {}
 
   async deleteImage(url: string) {
     const fileName = url.split('/').pop();
@@ -31,5 +27,24 @@ export class UploadService {
     } catch (err) {
       throw new Error(`Error deleting file: ${err.message}`);
     }
+  }
+
+  async uploadUserAvatar(userId: number, path: string) {
+    const oldAvatar = (await this.userService.findOneByUserId(userId)).avatar;
+
+    await this.deleteImage(oldAvatar);
+
+    return await this.userService.updateUserByUserId(userId, { avatar: path });
+  }
+
+  async uploadGallery(files: Express.Multer.File[], type: string) {
+    const datas = files.map((file) => {
+      const url = `${global.host}/gallery/${file.filename}`;
+      return {
+        url,
+        type,
+      };
+    });
+    this.galleryService.create(datas);
   }
 }

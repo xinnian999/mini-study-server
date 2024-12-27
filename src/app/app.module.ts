@@ -2,11 +2,12 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserModule } from '../user/user.module';
-import { AuthModule } from '../auth/auth.module';
+import { UserModule } from 'src/user/user.module';
+import { AuthModule } from 'src/auth/auth.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
-import { UploadModule } from '../upload/upload.module';
+import { UploadModule } from 'src/upload/upload.module';
+import { GalleryModule } from 'src/gallery/gallery.module';
 
 @Module({
   imports: [
@@ -24,11 +25,12 @@ import { UploadModule } from '../upload/upload.module';
     }),
     // 静态服务配置
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'static'),
+      rootPath: join(process.cwd(), 'static'),
     }),
     UserModule,
     AuthModule,
     UploadModule,
+    GalleryModule
   ],
   controllers: [AppController],
   providers: [AppService],

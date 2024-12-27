@@ -5,6 +5,7 @@ import { UploadService } from './upload.service';
 import { UploadController } from './upload.controller';
 import { join } from 'path';
 import { UserModule } from 'src/user/user.module';
+import { GalleryModule } from 'src/gallery/gallery.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { UserModule } from 'src/user/user.module';
       }),
     }),
     UserModule,
+    GalleryModule,
   ],
   providers: [UploadService],
   controllers: [UploadController],
