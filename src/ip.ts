@@ -18,8 +18,19 @@ const ip = () => {
     }
     return null;
   };
+  
+  const selfIp = getLocalIP()
+  
+  if(selfIp === '172.17.237.169'){
+      
+      global.host = `http://8.141.86.20:3000`
 
-  global.host = `http://${getLocalIP()}:3000`;
+  }else{
+      
+      global.host = `http://${selfIp}:3000`;
+  }
+
+
 };
 
 export default ip;  
