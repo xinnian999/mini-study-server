@@ -18,7 +18,6 @@ import { GalleryModule } from 'src/gallery/gallery.module';
           cb(null, join(process.cwd(), `static/${target}`));
         },
         filename: (req, file, cb) => {
-
           const filename = `${Date.now()}-${file.originalname}`;
 
           // req['filePath'] = `${global.host}/userAvatar/${filename}`;
@@ -28,7 +27,7 @@ import { GalleryModule } from 'src/gallery/gallery.module';
       }),
     }),
     UserModule,
-    GalleryModule,
+    GalleryModule
   ],
   providers: [UploadService],
   controllers: [UploadController],

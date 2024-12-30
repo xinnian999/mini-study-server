@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
-import ip from './ip';
-import staticDirInit from './staticDirInit';
+import ip from './utils/ip';
+import staticDirInit from './utils/staticDirInit';
 
 async function bootstrap() {
   ip();

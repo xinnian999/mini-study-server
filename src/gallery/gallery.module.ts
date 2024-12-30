@@ -5,7 +5,9 @@ import { Gallery } from './gallery.entity';
 import { GalleryController } from './gallery.controller';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Gallery])],
+  imports: [
+    TypeOrmModule.forFeature([Gallery]),
+  ],
   providers: [GalleryService],
   controllers: [GalleryController],
   exports: [GalleryService],

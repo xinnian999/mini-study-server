@@ -1,9 +1,8 @@
 // src/user/user.service.ts
 import { Injectable } from '@nestjs/common';
-import { join } from 'path';
-import * as fs from 'fs-extra';
 import { UserService } from 'src/user/user.service';
 import { GalleryService } from 'src/gallery/gallery.service';
+import deleteStatic from 'src/utils/deleteStatic';
 
 @Injectable()
 export class UploadService {
@@ -12,32 +11,16 @@ export class UploadService {
     private galleryService: GalleryService,
   ) {}
 
-  async deleteImage(url: string) {
-    const fileName = url.split('/').pop();
-
-    const filePath = url.replace(global.host, '');
-
-    const dir = join(process.cwd(), 'static');
-
-    const target = join(dir, filePath);
-
-    try {
-      await fs.remove(target); // 删除文件
-      return `File ${fileName} deleted successfully`;
-    } catch (err) {
-      throw new Error(`Error deleting file: ${err.message}`);
-    }
-  }
-
   async uploadUserAvatar(userId: number, path: string) {
     const oldAvatar = (await this.userService.findOneByUserId(userId)).avatar;
 
-    await this.deleteImage(oldAvatar);
+    await deleteStatic(oldAvatar);
 
     return await this.userService.updateUserByUserId(userId, { avatar: path });
   }
 
   async uploadGallery(files: Express.Multer.File[], type: string) {
+
     const datas = files.map((file) => {
       const url = `${global.host}/gallery/${file.filename}`;
       return {

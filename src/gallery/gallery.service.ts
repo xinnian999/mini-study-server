@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Gallery } from './gallery.entity';
+import deleteStatic from 'src/utils/deleteStatic';
 
 @Injectable()
 export class GalleryService {
@@ -20,5 +21,17 @@ export class GalleryService {
   async create(datas: Gallery[]) {
     const gallerys = this.galleryRepository.create(datas);
     return this.galleryRepository.save(gallerys);
+  }
+
+  async delete(ids: number[]) {
+    const reqs = ids.map(async (id) => {
+      const data = await this.galleryRepository.findOne({ where: { id } });
+
+      await deleteStatic(data.url);
+
+      return await this.galleryRepository.delete(id);
+    });
+
+    return await Promise.all(reqs);
   }
 }
