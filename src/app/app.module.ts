@@ -8,6 +8,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { UploadModule } from 'src/upload/upload.module';
 import { GalleryModule } from 'src/gallery/gallery.module';
+import { KnowTypeModule } from 'src/knowType/knowType.module';
 
 @Module({
   imports: [
@@ -30,9 +31,10 @@ import { GalleryModule } from 'src/gallery/gallery.module';
     UserModule,
     AuthModule,
     UploadModule,
-    GalleryModule
+    GalleryModule,
+    KnowTypeModule
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}
