@@ -13,10 +13,14 @@ export class AuthService {
   constructor(
     private userService: UserService,
     private jwtService: JwtService,
-  ) {}
+  ) { }
 
   async signIn(username: string, pass: string): Promise<any> {
     const user = await this.userService.findOneByUserName(username);
+
+    if (!user) {
+      throw new UnauthorizedException('username Not Fount');
+    }
 
     if (user?.password !== pass) {
       throw new UnauthorizedException('passwordError');
