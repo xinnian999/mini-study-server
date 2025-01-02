@@ -19,11 +19,11 @@ export class AuthService {
     const user = await this.userService.findOneByUserName(username);
 
     if (!user) {
-      throw new UnauthorizedException('username Not Fount');
+      throw new UnauthorizedException('用户名不存在');
     }
 
     if (user?.password !== pass) {
-      throw new UnauthorizedException('passwordError');
+      throw new UnauthorizedException('密码错误');
     }
 
     const payload = { userId: user.id, username: user.username };
@@ -41,7 +41,7 @@ export class AuthService {
         messageText: '注册成功',
       };
     } catch {
-      throw new HttpException('username Unique', HttpStatus.CONFLICT);
+      throw new HttpException('用户名已存在', HttpStatus.CONFLICT);
     }
   }
 

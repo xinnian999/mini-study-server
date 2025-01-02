@@ -16,4 +16,22 @@ export class KnowTypeService {
       where: { userId },
     });
   }
+
+  async findOneById(id: number): Promise<KnowType | undefined> {
+    return this.knowTypeRepository.findOne({ where: { id } });
+  }
+
+  async create(params: KnowType) {
+    const user = this.knowTypeRepository.create(params);
+    return this.knowTypeRepository.save(user);
+  }
+
+  async updateById(id: number, data: Partial<KnowType>): Promise<UpdateResult> {
+    delete data.id;
+    return this.knowTypeRepository.update({ id }, data);
+  }
+
+  async deleteById(id: number) {
+    return await this.knowTypeRepository.delete(id);
+  }
 }

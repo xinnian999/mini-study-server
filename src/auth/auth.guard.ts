@@ -17,7 +17,7 @@ import {
       const request = context.switchToHttp().getRequest();
       const token = this.extractTokenFromHeader(request);
       if (!token) {
-        throw new UnauthorizedException();
+        throw new UnauthorizedException('登录过期');
       }
       try {
         const payload = await this.jwtService.verifyAsync(
@@ -29,7 +29,7 @@ import {
 
         request['user'] = payload; // token校验通过时，将用户信息挂载到请求对象上
       } catch {
-        throw new UnauthorizedException(); // 不通过时，抛出401异常
+        throw new UnauthorizedException('登录过期'); // 不通过时，抛出401异常
       }
       return true;
     }
