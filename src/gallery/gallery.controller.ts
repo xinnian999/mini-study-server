@@ -8,7 +8,7 @@ export class GalleryController {
 
   @Get('list')
   @UseGuards(AuthGuard)
-  list(@Query('type') type: string) {
+  list(@Query('type') type?: string) {
     return this.galleryService.findAll(type);
   }
 

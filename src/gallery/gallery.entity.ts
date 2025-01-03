@@ -10,4 +10,7 @@ export class Gallery {
 
   @Column()
   url: string;
+
+  @Column()
+  name?: string;
 }
