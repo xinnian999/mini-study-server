@@ -12,5 +12,5 @@ export class Gallery {
   url: string;
 
   @Column()
-  name?: string;
+  title?: string;
 }
