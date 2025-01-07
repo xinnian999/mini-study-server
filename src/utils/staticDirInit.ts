@@ -2,7 +2,7 @@ import { existsSync, mkdirSync } from 'fs';
 import { join } from 'path';
 
 // 传入需要检查和创建的目录数组
-const directories = ['userAvatar', 'gallery'];
+const directories = ['userAvatar', 'gallery', 'know'];
 
 // 假设 static 目录在服务器根目录下
 const staticDir = join(process.cwd(), 'static');

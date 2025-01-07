@@ -10,7 +10,7 @@ export class GalleryService {
   constructor(
     @InjectRepository(Gallery)
     private galleryRepository: Repository<Gallery>,
-  ) { }
+  ) {}
 
   async findAll(type: string): Promise<Gallery[] | undefined> {
     return this.galleryRepository.find({
@@ -28,10 +28,20 @@ export class GalleryService {
       title: `${title}${Math.floor(Math.random() * 900) + 100}`,
       url: `${global.host}/gallery/${file.filename}`,
       type,
-    }))
+    }));
 
     return await this.create(datas);
+  }
 
+  async rename(ids: number[], title: string) {
+    const reqs = ids.map(async (id) => {
+      return await this.galleryRepository.update(
+        { id },
+        { title: `${title}${Math.floor(Math.random() * 900) + 100}` },
+      );
+    });
+
+    return await Promise.all(reqs);
   }
 
   async delete(ids: number[]) {

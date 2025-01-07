@@ -11,6 +11,9 @@ export class Know {
   @Column()
   url: string;
 
+  @Column()
+  typeId: number;
+  
   @Column({ default: 0 })
   count?: number;
 
@@ -25,6 +28,4 @@ export class Know {
   //   this.count = this.correctCount + this.errorCount;
   // }
 
-  @Column()
-  typeId: number;
 }

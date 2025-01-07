@@ -9,6 +9,7 @@ import { join } from 'path';
 import { UploadModule } from 'src/upload/upload.module';
 import { GalleryModule } from 'src/gallery/gallery.module';
 import { KnowTypeModule } from 'src/knowType/knowType.module';
+import { KnowModule } from 'src/know/know.module';
 
 @Module({
   imports: [
@@ -32,7 +33,8 @@ import { KnowTypeModule } from 'src/knowType/knowType.module';
     AuthModule,
     UploadModule,
     GalleryModule,
-    KnowTypeModule
+    KnowTypeModule,
+    KnowModule
   ],
   controllers: [AppController],
   providers: [AppService],
