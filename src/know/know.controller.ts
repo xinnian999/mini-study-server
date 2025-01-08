@@ -10,6 +10,7 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { KnowService } from './know.service';
+import { Know } from './know.entity';
 
 @Controller('know')
 export class KnowController {
@@ -28,12 +29,31 @@ export class KnowController {
   addByGallery(@Body() body: Record<string, any>) {
     const { typeId, images } = body;
 
-    // console.log(body)
-
     return this.knowService.addByGallery(typeId, images);
   }
 
-  // 删除识图类型
+  // 从图库选择图片-创建识图
+  @Put('update')
+  @UseGuards(AuthGuard)
+  update(@Body() body: Know) {
+    return this.knowService.updateById(body.id, body);
+  }
+
+  // 从图库选择图片-创建识图
+  @Put('addCorrect')
+  @UseGuards(AuthGuard)
+  addCorrect(@Body() body: Know) {
+    return this.knowService.addCorrectById(body.id);
+  }
+
+   // 从图库选择图片-创建识图
+   @Put('addError')
+   @UseGuards(AuthGuard)
+   addError(@Body() body: Know) {
+     return this.knowService.addErrorById(body.id);
+   }
+
+  // 删除识图
   @Delete('delete')
   @UseGuards(AuthGuard)
   delete(@Query('id') id: number) {

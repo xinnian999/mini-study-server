@@ -1,4 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  AfterUpdate,
+  BeforeUpdate,
+} from 'typeorm';
 
 @Entity()
 export class Know {
@@ -13,19 +19,22 @@ export class Know {
 
   @Column()
   typeId: number;
-  
+
+  @Column({ default: 0 })
+  correct?: number;
+
+  @Column({ default: 0 })
+  error?: number;
+
   @Column({ default: 0 })
   count?: number;
 
-  @Column({ default: 0 })
-  correctCount?: number;
+  @Column({ default: '0' })
+  correctRate?: string;
 
-  @Column({ default: 0 })
-  errorCount?: number;
-
-  // @BeforeInsert()
-  // calculateCount() {
-  //   this.count = this.correctCount + this.errorCount;
-  // }
-
+  @BeforeUpdate()
+  calculate() {
+    this.count = this.correct + this.error;
+    this.correctRate = (this.correct / (this.correct + this.error)).toFixed(2);
+  }
 }

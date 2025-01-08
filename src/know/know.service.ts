@@ -36,6 +36,42 @@ export class KnowService {
     return await Promise.all(reqs);
   }
 
+  async updateById(id: number, data: Know) {
+    delete data.id;
+    return this.knowRepository.update({ id }, data);
+  }
+
+  async addCorrectById(id: number) {
+    // 查找指定 id 的实体
+    const know = await this.knowRepository.findOne({ where: { id } });
+
+    if (!know) {
+      throw new Error('Know entity not found');
+    }
+
+    // 增加 correct 字段的值
+    know.correct = (know.correct || 0) + 1;
+
+    // 更新数据库
+    return this.knowRepository.save(know);
+  }
+
+  async addErrorById(id: number) {
+    // 查找指定 id 的实体
+    const know = await this.knowRepository.findOne({ where: { id } });
+
+    if (!know) {
+      throw new Error('Know entity not found');
+    }
+
+    // 增加 error 字段的值
+    know.error = (know.error || 0) + 1;
+
+    // 更新数据库
+    return this.knowRepository.save(know);
+  }
+
+
   async deleteById(id: number) {
     return await this.knowRepository.delete(id);
   }
