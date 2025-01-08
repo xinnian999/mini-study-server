@@ -10,12 +10,17 @@ export class GalleryService {
   constructor(
     @InjectRepository(Gallery)
     private galleryRepository: Repository<Gallery>,
-  ) {}
+  ) { }
 
   async findAll(type: string): Promise<Gallery[] | undefined> {
-    return this.galleryRepository.find({
+    const data = await this.galleryRepository.find({
       where: { type },
     });
+
+    return data.map(item => ({
+      ...item,
+      url: global.host + item.url
+    }))
   }
 
   async create(datas: Gallery[]) {
