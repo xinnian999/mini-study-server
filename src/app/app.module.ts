@@ -28,6 +28,14 @@ import { KnowModule } from 'src/know/know.module';
     // 静态服务配置
     ServeStaticModule.forRoot({
       rootPath: join(process.cwd(), 'static'),
+      serveStaticOptions: {
+        setHeaders: (res, path) => {
+          // 如果是图片文件，设置长时间缓存
+          if (path.endsWith('.jpg') || path.endsWith('.jpeg') || path.endsWith('.png') || path.endsWith('.gif')) {
+            res.setHeader('Cache-Control', 'public, max-age=31536000, immutable'); // 1年缓存
+          }
+        },
+      },
     }),
     UserModule,
     AuthModule,
