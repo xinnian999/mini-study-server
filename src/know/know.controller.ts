@@ -39,14 +39,14 @@ export class KnowController {
     return this.knowService.updateById(body.id, body);
   }
 
-  // 从图库选择图片-创建识图
+  // 增加一次正确
   @Put('addCorrect')
   @UseGuards(AuthGuard)
   addCorrect(@Body() body: Know) {
     return this.knowService.addCorrectById(body.id);
   }
 
-   // 从图库选择图片-创建识图
+   // 增加一次错误
    @Put('addError')
    @UseGuards(AuthGuard)
    addError(@Body() body: Know) {

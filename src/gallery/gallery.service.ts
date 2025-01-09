@@ -10,17 +10,14 @@ export class GalleryService {
   constructor(
     @InjectRepository(Gallery)
     private galleryRepository: Repository<Gallery>,
-  ) { }
+  ) {}
 
   async findAll(type: string): Promise<Gallery[] | undefined> {
     const data = await this.galleryRepository.find({
       where: { type },
     });
 
-    return data.map(item => ({
-      ...item,
-      url: global.host + item.url
-    }))
+    return data;
   }
 
   async create(datas: Gallery[]) {
@@ -29,9 +26,9 @@ export class GalleryService {
   }
 
   async upload({ files, title, type }: Record<string, any>) {
-    const datas = files.map((file) => ({
+    const datas = files.map((file: Express.Multer.File) => ({
       title: `${title}${Math.floor(Math.random() * 900) + 100}`,
-      url: `${global.host}/gallery/${file.filename}`,
+      url_suffix: `/gallery/${file.filename}`,
       type,
     }));
 
@@ -53,7 +50,7 @@ export class GalleryService {
     const reqs = ids.map(async (id) => {
       const data = await this.galleryRepository.findOne({ where: { id } });
 
-      await deleteStatic(data.url);
+      await deleteStatic(data.url_suffix);
 
       return await this.galleryRepository.delete(id);
     });

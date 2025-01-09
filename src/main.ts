@@ -1,17 +1,17 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
-import ip from './utils/ip';
-import staticDirInit from './utils/staticDirInit';
+import { ip, staticDirInit } from './utils';
+import { UrlInterceptor } from './utils';
 
 async function bootstrap() {
   ip();
-  staticDirInit()
+  staticDirInit();
 
   const app = await NestFactory.create(AppModule);
 
-  app.enableCors();
+  app.enableCors(); // 支持跨域访问
+  app.useGlobalInterceptors(new UrlInterceptor());
 
   await app.listen(process.env.PORT ?? 3000);
-
 }
 bootstrap();

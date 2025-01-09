@@ -4,6 +4,7 @@ import { AuthController } from './auth.controller';
 import { UserModule } from '../user/user.module';
 import { jwtConstants } from './constants';
 import { JwtModule } from '@nestjs/jwt';
+import { UploadModule } from 'src/utils';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { JwtModule } from '@nestjs/jwt';
       secret: jwtConstants.secret,
       signOptions: { expiresIn: '86400s' },
     }),
+    UploadModule('userAvatar'),
   ],
   providers: [AuthService],
   controllers: [AuthController],

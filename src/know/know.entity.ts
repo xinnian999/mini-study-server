@@ -2,7 +2,6 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  AfterUpdate,
   BeforeUpdate,
 } from 'typeorm';
 
@@ -15,7 +14,7 @@ export class Know {
   title: string;
 
   @Column()
-  url: string;
+  url_suffix: string;
 
   @Column()
   typeId: number;

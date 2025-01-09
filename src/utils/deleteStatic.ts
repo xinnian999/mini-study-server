@@ -1,21 +1,14 @@
-import { join } from "path";
+import { join } from 'path';
 import * as fs from 'fs-extra';
 
-const deleteStatic = async (url: string) => {
-  const fileName = url.split('/').pop();
-
-  const filePath = url.replace(global.host, '');
-
-  const dir = join(process.cwd(), 'static');
-
-  const target = join(dir, filePath);
+const deleteStatic = async (suffix: string) => {
+  const filePath = join(process.cwd(), 'static', suffix);
 
   try {
-    await fs.remove(target); // 删除文件
-    return `File ${fileName} deleted successfully`;
+    await fs.remove(filePath); // 删除文件
   } catch (err) {
     throw new Error(`Error deleting file: ${err.message}`);
   }
 };
 
-export default deleteStatic
+export default deleteStatic;

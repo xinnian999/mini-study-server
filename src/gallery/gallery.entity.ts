@@ -9,7 +9,7 @@ export class Gallery {
   type: string;
 
   @Column()
-  url: string;
+  url_suffix: string;
 
   @Column()
   title?: string;

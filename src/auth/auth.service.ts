@@ -7,13 +7,14 @@ import {
 import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { User } from 'src/user/user.entity';
+import { deleteStatic } from 'src/utils';
 
 @Injectable()
 export class AuthService {
   constructor(
     private userService: UserService,
     private jwtService: JwtService,
-  ) { }
+  ) {}
 
   async signIn(username: string, pass: string): Promise<any> {
     const user = await this.userService.findOneByUserName(username);
@@ -58,5 +59,15 @@ export class AuthService {
     delete info.id;
 
     return await this.userService.updateUserByUserId(userId, info);
+  }
+
+  async uploadUserAvatar(userId: number, file: Express.Multer.File) {
+    const userInfo = await this.userService.findOneByUserId(userId);
+
+    await deleteStatic(userInfo.avatar_url_suffix);
+
+    return await this.userService.updateUserByUserId(userId, {
+      avatar_url_suffix: `/userAvatar/${file.filename}`,
+    });
   }
 }

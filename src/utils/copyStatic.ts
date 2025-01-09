@@ -1,26 +1,22 @@
 import { join } from 'path';
 import * as fs from 'fs-extra';
 
-const copyStatic = async (url: string, target: string) => {
-  const fileName = url.split('/').pop();
+const copyStatic = async (suffix: string, target: string) => {
+  const fileName = suffix.split('/').pop();
 
-  const filePath = url.replace(global.host, '');
+  const sourcePath = join(process.cwd(), 'static', suffix);
 
-  const dir = join(process.cwd(), 'static');
+  const newSuffix = `${target}/${Date.now()}-${fileName}`;
 
-  const staticUrl = join(dir, filePath);
-
-  const targetPath = `${target}/${Date.now()}-${fileName}`
-
-  const targetUrl = join(dir, targetPath);
+  const targetPath = join(process.cwd(), 'static', newSuffix);
 
   try {
-    await fs.copyFile(staticUrl, targetUrl); // 复制文件
+    await fs.copyFile(sourcePath, targetPath); // 复制文件
   } catch (err) {
     throw new Error(`Error copying file: ${err.message}`);
   }
 
-  return `${global.host}/${targetPath}`;
+  return newSuffix;
 };
 
 export default copyStatic;

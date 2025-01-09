@@ -22,11 +22,11 @@ export class KnowService {
   // 将图库数据copy到某个识图类型里
   async addByGallery(typeId: number, images: Gallery[]) {
     const reqs = images.map(async (item) => {
-      const newUrl = await copyStatic(item.url, 'know');
+      const new_suffix = await copyStatic(item.url_suffix, '/know');
 
       const know = this.knowRepository.create({
         typeId,
-        url: newUrl,
+        url_suffix: new_suffix,
         title: item.title,
       });
 

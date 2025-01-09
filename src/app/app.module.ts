@@ -6,7 +6,6 @@ import { UserModule } from 'src/user/user.module';
 import { AuthModule } from 'src/auth/auth.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
-import { UploadModule } from 'src/upload/upload.module';
 import { GalleryModule } from 'src/gallery/gallery.module';
 import { KnowTypeModule } from 'src/knowType/knowType.module';
 import { KnowModule } from 'src/know/know.module';
@@ -39,7 +38,6 @@ import { KnowModule } from 'src/know/know.module';
     }),
     UserModule,
     AuthModule,
-    UploadModule,
     GalleryModule,
     KnowTypeModule,
     KnowModule

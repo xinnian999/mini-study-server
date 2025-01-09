@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { KnowTypeService } from './knowType.service';
 import { AuthGuard } from 'src/auth/auth.guard';
-import { UserId } from 'src/utils/decorator';
+import { UserId } from 'src/utils';
 import { KnowType } from './knowType.entity';
 
 @Controller('knowType')

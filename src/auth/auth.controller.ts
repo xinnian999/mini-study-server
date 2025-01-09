@@ -8,11 +8,15 @@ import {
   Get,
   Request,
   Put,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthGuard } from './auth.guard';
 import { User } from '../user/user.entity';
 import { AuthRequest } from 'src/interface';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { UserId } from 'src/utils';
 
 @Controller('auth')
 export class AuthController {
@@ -44,5 +48,16 @@ export class AuthController {
   @Put('updateUserInfo')
   updateUserInfo(@Request() req: AuthRequest, @Body() body: User) {
     return this.authService.setUserInfo(req.user.userId, body);
+  }
+
+  // 更新用户头像
+  @UseGuards(AuthGuard)
+  @Post('updateUserAvatar')
+  @UseInterceptors(FileInterceptor('file')) // 将name为file的文件拦截下来
+  updateUserAvatar(
+    @UserId() userId: number,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    return this.authService.uploadUserAvatar(userId, file);
   }
 }
