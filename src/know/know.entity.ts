@@ -1,9 +1,4 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  BeforeUpdate,
-} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, BeforeUpdate } from 'typeorm';
 
 @Entity()
 export class Know {
@@ -34,6 +29,11 @@ export class Know {
   @BeforeUpdate()
   calculate() {
     this.count = this.correct + this.error;
-    this.correctRate = (this.correct / (this.correct + this.error)).toFixed(2);
+    this.correctRate =
+      (this.correct / (this.correct + this.error)).toFixed(2) || '0';
+      
+    if (this.correct + this.error === 0) {
+      this.correctRate = '0';
+    }
   }
 }

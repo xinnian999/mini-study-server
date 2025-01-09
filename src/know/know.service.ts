@@ -36,6 +36,20 @@ export class KnowService {
     return await Promise.all(reqs);
   }
 
+  async addByAlbum(typeId: number, files: Express.Multer.File[]) {
+    const reqs = files.map(async (item) => {
+      const know = this.knowRepository.create({
+        typeId,
+        url_suffix: `/know/${item.filename}`,
+        title: `${Date.now()}`,
+      });
+
+      return this.knowRepository.save(know);
+    });
+
+    return await Promise.all(reqs);
+  }
+
   async updateById(id: number, data: Know) {
     delete data.id;
     return this.knowRepository.update({ id }, data);
@@ -71,8 +85,23 @@ export class KnowService {
     return this.knowRepository.save(know);
   }
 
-
   async deleteById(id: number) {
     return await this.knowRepository.delete(id);
+  }
+
+  async resetById(id: number) {
+    // 查找指定 id 的实体
+    const know = await this.knowRepository.findOne({ where: { id } });
+
+    if (!know) {
+      throw new Error('Know entity not found');
+    }
+
+    // 清空 correct 和 error 字段的值
+    know.correct = 0;
+    know.error = 0;
+
+    // 更新数据库
+    return this.knowRepository.save(know);
   }
 }
